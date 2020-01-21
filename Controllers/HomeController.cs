@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Modas.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +12,12 @@ namespace Modas.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        public ViewResult Index() => View();
+        private IEventRepository repository;
+        public HomeController(IEventRepository repo)
+        {
+            repository = repo;
+        }
+
+        public ViewResult Index() => View(repository.Events);
     }
 }
