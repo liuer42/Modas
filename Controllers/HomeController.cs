@@ -11,6 +11,6 @@ namespace Modas.Controllers
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        public string Index() => "This is POCO";
+        public ViewResult Index() => View();
     }
 }
