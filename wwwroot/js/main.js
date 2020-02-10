@@ -1,6 +1,17 @@
 ﻿$(function() {
     initButtons();
 
+    $('.flag').on('click', function () {
+        // TODO: AJAX to update database
+        if ($(this).data('checked')) {
+            $(this).data('checked', false);
+            $(this).removeClass('fas').addClass('far');
+        } else {
+            $(this).data('checked', true);
+            $(this).removeClass('far').addClass('fas');
+        }
+    });
+
     // event listeners for first/next/prev/last buttons
     $('#next, #prev, #first, #last').on('click', function () {
         location.href = "page" + $(this).data('page');

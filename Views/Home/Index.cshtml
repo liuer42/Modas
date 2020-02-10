@@ -8,20 +8,25 @@
     <title>MODAS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2dd971e983.js" crossorigin="anonymous"></script>
+    <link href="~/css/style.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <h3><i class="fa fa-home"></i> Home</h3>
 
         <table class="container table table-bordered">
-            <tr><th>Date</th><th>Time</th><th>Location</th></tr>
+            <tr><th class="text-center">Flag</th><th>Date</th><th>Time</th><th>Location</th></tr>
             @foreach (var e in Model.Events)
             {
-                <tr>
-                    <td>@String.Format("{0: ddd, MMM dd, yyyy}", e.TimeStamp)</td>
-                    <td>@String.Format("{0:hh:mm tt}", e.TimeStamp)</td>
-                    <td>@e.Location.Name</td>
-                </tr>
+            <tr>
+                <td class="text-center">
+                    <i data-id="@e.EventId" data-checked="@e.Flagged.ToString().ToLower()" class="@(e.Flagged ? "fas" : "far") fa-flag fa-lg flag"></i>
+                </td>
+                <td>@String.Format("{0: ddd, MMM dd, yyyy}", e.TimeStamp)</td>
+                <td>@String.Format("{0:hh:mm tt}", e.TimeStamp)</td>
+                <td>@e.Location.Name</td>
+            </tr>
             }
         </table>
         <div class="row mb-3">
