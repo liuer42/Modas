@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modas.Models;
 using System.Linq;
+using Modas.Models.PageModels;
 
 namespace Modas.Controllers
 {
@@ -12,11 +13,36 @@ namespace Modas.Controllers
         private IEventRepository repository;
         public EventController(IEventRepository repo) => repository = repo;
 
+        private readonly int PageSize = 20;
+
         [HttpGet]
         // returns all events (unsorted)
         public IEnumerable<Event> Get() => repository.Events
             .Include(e => e.Location);
 
+        [HttpGet("page{page:int}")]
+        // returns all events by page
+        public ApiListViewModel GetPage(int page = 1) =>
+            new ApiListViewModel
+            {
+                Events = repository.Events
+                    .Select(e => new ApiViewEvent
+                    {
+                        EventId = e.EventId,
+                        Flagged = e.Flagged,
+                        TimeStamp = e.TimeStamp,
+                        LocationName = e.Location.Name
+                    })
+                    .OrderByDescending(e => e.TimeStamp)
+                    .Skip((page - 1) * PageSize)
+                    .Take(PageSize),
+                PageInfo = new PageInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = repository.Events.Count()
+                }
+            };
 
         [HttpGet("{id}")]
         // return specific event

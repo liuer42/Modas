@@ -22,19 +22,24 @@ namespace Modas.Controllers
             repository = repo;
         }
 
-        public ViewResult Index(int page = 1) => View(new EventListViewModel
+        //public ViewResult Index(int page = 1) => View(new EventListViewModel
+        //{
+        //    Events = repository.Events
+        //        .Include(e => e.Location)
+        //        .OrderByDescending(e => e.TimeStamp)
+        //        .Skip((page - 1) * PageSize)
+        //        .Take(PageSize),
+        //    PageInfo = new PageInfo
+        //    {
+        //        CurrentPage = page,
+        //        ItemsPerPage = PageSize,
+        //        TotalItems = repository.Events.Count()
+        //    }
+        //});
+
+        public IActionResult Index()
         {
-            Events = repository.Events
-                .Include(e => e.Location)
-                .OrderByDescending(e => e.TimeStamp)
-                .Skip((page - 1) * PageSize)
-                .Take(PageSize),
-            PageInfo = new PageInfo
-            {
-                CurrentPage = page,
-                ItemsPerPage = PageSize,
-                TotalItems = repository.Events.Count()
-            }
-        });
+            return Redirect("/index.html");
+        }
     }
 }
